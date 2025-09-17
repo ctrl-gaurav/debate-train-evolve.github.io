@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="Debate, Train, Evolve: Self-Evolution of Language Model Reasoning - A novel framework for autonomous reasoning improvement">
+  <meta property="og:title" content="Debate, Train, Evolve: Self-Evolution of Language Model Reasoning" />
+  <meta property="og:description"
+    content="EMNLP 2025: A ground truth-free training framework using multi-agent debate traces to evolve language models" />
+  <meta property="og:url" content="https://debate-train-evolve.github.io" />
+  <meta property="og:image" content="static/images/banner.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:title" content="Debate, Train, Evolve: Self-Evolution of Language Model Reasoning">
+  <meta name="twitter:description"
+    content="EMNLP 2025: A ground truth-free training framework using multi-agent debate traces to evolve language models">
+  <meta name="twitter:image" content="static/images/twitter_banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords"
+    content="multi-agent debate, language model reasoning, self-evolution, EMNLP 2025, DTE framework, RCR prompting">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Debate, Train, Evolve: Self-Evolution of Language Model Reasoning</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <style>
+    .leaderboard-section {
+      padding: 2rem 0;
+    }
+
+    .leaderboard-container {
+      overflow-x: auto;
+      margin: 2rem auto;
+    }
+
+    .highlight-cell {
+      font-weight: bold;
+      background-color: rgba(0, 209, 178, 0.1);
+    }
+
+    .model-family {
+      font-weight: bold;
+      background-color: #f5f5f5;
+    }
+
+    .header-cell {
+      cursor: pointer;
+    }
+
+    #leaderboardTable thead th {
+      position: relative;
+      text-align: center;
+    }
+
+    .task-column {
+      min-width: 100px;
+    }
+
+    .model-column {
+      min-width: 180px;
+    }
+
+    .params-column {
+      min-width: 80px;
+    }
+
+    .sort-icon {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-left: 5px;
+      position: relative;
+    }
+
+    .sort-icon.sort-asc::after {
+      content: "▲";
+      font-size: 10px;
+      position: absolute;
+      top: -5px;
+    }
+
+    .sort-icon.sort-desc::after {
+      content: "▼";
+      font-size: 10px;
+      position: absolute;
+      top: -5px;
+    }
+
+    .leaderboard-controls {
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+    }
+
+    .search-box {
+      max-width: 400px;
+      margin: 0 auto;
+      display: flex;
+    }
+
+    .search-box input {
+      flex-grow: 1;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .search-box button {
+      padding: 0.5rem 1rem;
+      background-color: #485fc7;
+      color: white;
+      border: 1px solid #485fc7;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    .search-box button:hover {
+      background-color: #364fc7;
+    }
+
+    /* Key Findings Enhanced Styles */
+    .key-findings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+      padding: 0 1rem;
+    }
+
+    .finding-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .finding-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #485fc7, #00d1b2);
+    }
+
+    .finding-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .finding-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #485fc7, #00d1b2);
+      border-radius: 50%;
+      margin-bottom: 1.5rem;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .finding-content {
+      flex: 1;
+    }
+
+    .finding-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #363636;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .finding-metric {
+      font-size: 1rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #485fc7, #00d1b2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .finding-description {
+      color: #4a4a4a;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .key-findings-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+      }
+
+      .finding-card {
+        padding: 1.5rem;
+      }
+
+      .finding-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
+
+      .finding-title {
+        font-size: 1.1rem;
+      }
+
+      .finding-metric {
+        font-size: 0.9rem;
+      }
+
+      .finding-description {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Debate, Train, Evolve: Self-Evolution of Language Model Reasoning</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=fT_GOxEAAAAJ&hl=en" target="_blank">Gaurav
+                  Srivastava</a><sup>♠</sup>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=Yn8AedsAAAAJ&hl=en" target="_blank">Zhenyu
+                  Bi</a><sup>♠</sup>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=v-D93X0AAAAJ&hl=en" target="_blank">Meng
+                  Lu</a><sup>♠</sup>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=_IVJi6UAAAAJ&hl=en" target="_blank">Xuan
+                  Wang</a><sup>♠*</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>♠</sup>Department of Computer Science, Virginia Tech, Blacksburg, VA, USA<br>
+                <sup>*</sup>Corresponding Author
+              </span>
+            </div>
+
+            <div class="has-text-centered" style="margin-top: 1rem;">
+              <span class="tag is-link is-medium">EMNLP 2025 Main Conference</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2505.15734" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+                <!-- Github link -->
+                <span class="link-block">
+                  <a href="https://github.com/ctrl-gaurav/Debate-Train-Evolve" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>GitHub</span>
+                  </a>
+                </span>
+
+                <!-- Models Link -->
+                <span class="link-block">
+                  <a href="#" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-robot"></i>
+                    </span>
+                    <span>Models (Coming Soon)</span>
+                  </a>
+                </span>
+
+                <!-- Arxiv PDF link -->
+                <span class="link-block">
+                  <a href="#" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper (Coming Soon)</span>
+                  </a>
+                </span>
+
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paper abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-widescreen">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+                Large language models (LLMs) have improved significantly in their reasoning through extensive training on massive datasets. However, relying solely on additional data for improvement is becoming increasingly impractical, highlighting the need for models to autonomously enhance their reasoning without external supervision. In this paper, we propose <strong>Debate, Train, Evolve (DTE)</strong>, a novel ground truth-free training framework that uses multi-agent debate traces to evolve a single language model. We also introduce a new prompting strategy <strong>Reflect-Critique-Refine</strong>, to improve debate quality by explicitly instructing agents to critique and refine their reasoning.
+            </p>
+            <p>
+                Extensive evaluations on <strong>five</strong> reasoning benchmarks with <strong>six</strong> open-weight models show that our DTE framework achieve substantial improvements, with an average accuracy gain of <strong>8.92%</strong> on the challenging GSM-PLUS dataset. Furthermore, we observe strong cross-domain generalization, with an average accuracy gain of <strong>5.8%</strong> on all other benchmarks, suggesting that our method captures general reasoning capabilities.
+            </p>
+            <p>
+                Our framework code and trained models will be publicly available upon publication.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Framework Overview Image -->
+  <section class="section">
+    <div class="container is-max-widescreen">
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <div class="has-text-centered">
+            <img src="DTE.jpg" alt="DTE Framework Overview" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <p class="is-size-6 has-text-grey" style="margin-top: 0.5rem;">
+              <strong>Figure 1:</strong> Overview of the Debate, Train, Evolve (DTE) framework showing the three-phase process of multi-agent debate, training with GRPO, and model evolution.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Overview Section -->
+  <section class="section">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered">DTE Framework Results</h2>
+      <p class="subtitle has-text-centered">Performance improvements of evolved models using our Debate-Train-Evolve framework across reasoning benchmarks.</p>
+
+      <div class="columns is-multiline is-centered">
+        <div class="column is-one-third">
+          <div class="box has-text-centered">
+            <p class="title is-1 has-text-primary">8.92%</p>
+            <p class="subtitle is-4">Average accuracy gain</p>
+            <p>Our evolved models show substantial improvements on challenging mathematical reasoning tasks.</p>
+          </div>
+        </div>
+        <div class="column is-one-third">
+          <div class="box has-text-centered">
+            <p class="title is-1 has-text-info">5.8%</p>
+            <p class="subtitle is-4">Cross-domain generalization gain</p>
+            <p>Strong performance improvements across datasets not seen during training.</p>
+          </div>
+        </div>
+        <div class="column is-one-third">
+          <div class="box has-text-centered">
+            <p class="title is-1 has-text-success">6</p>
+            <p class="subtitle is-4">Model families tested</p>
+            <p>Evaluated on Qwen-2.5 (1.5B-14B) and Llama-3 (3B, 8B) models across 5 benchmarks.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Table -->
+      <div style="overflow-x: auto; margin-top: 2rem;">
+        <table class="table is-striped is-hoverable is-fullwidth">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>GSM8K<br><small>(Original → Evolved)</small></th>
+              <th>GSM-Plus<br><small>(Original → Evolved)</small></th>
+              <th>ARC-Challenge<br><small>(Original → Evolved)</small></th>
+              <th>Best Improvement</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Qwen-2.5-1.5B</strong></td>
+              <td>62.77 → 73.09 <span class="tag is-success is-small">+10.32</span></td>
+              <td>42.00 → 55.92 <span class="tag is-success is-small">+13.92</span></td>
+              <td>69.21 → 68.36 <span class="tag is-danger is-small">-0.85</span></td>
+              <td class="has-text-weight-bold has-text-success">+13.92% (GSM-Plus)</td>
+            </tr>
+            <tr>
+              <td><strong>Qwen-2.5-3B</strong></td>
+              <td>84.08 → 86.05 <span class="tag is-success is-small">+1.97</span></td>
+              <td>61.75 → 69.50 <span class="tag is-success is-small">+7.75</span></td>
+              <td>83.53 → 83.95 <span class="tag is-danger is-small">-0.42</span></td>
+              <td class="has-text-weight-bold has-text-success">+7.75% (GSM-Plus)</td>
+            </tr>
+            <tr>
+              <td><strong>Qwen-2.5-7B</strong></td>
+              <td>90.67 → 88.32 <span class="tag is-danger is-small">-2.35</span></td>
+              <td>68.62 → 74.71 <span class="tag is-success is-small">+6.09</span></td>
+              <td>87.22 → 90.89 <span class="tag is-success is-small">+3.67</span></td>
+              <td class="has-text-weight-bold has-text-success">+6.09% (GSM-Plus)</td>
+            </tr>
+            <tr>
+              <td><strong>Qwen-2.5-14B</strong></td>
+              <td>92.80 → 93.74 <span class="tag is-success is-small">+0.94</span></td>
+              <td>71.79 → 78.88 <span class="tag is-success is-small">+7.09</span></td>
+              <td>90.27 → 93.13 <span class="tag is-success is-small">+2.86</span></td>
+              <td class="has-text-weight-bold has-text-success">+7.09% (GSM-Plus)</td>
+            </tr>
+            <tr>
+              <td><strong>Llama-3.2-3B</strong></td>
+              <td>72.55 → 75.06 <span class="tag is-success is-small">+2.51</span></td>
+              <td>45.67 → 53.79 <span class="tag is-success is-small">+8.12</span></td>
+              <td>73.12 → 77.23 <span class="tag is-success is-small">+4.11</span></td>
+              <td class="has-text-weight-bold has-text-success">+8.12% (GSM-Plus)</td>
+            </tr>
+            <tr>
+              <td><strong>Llama-3.1-8B</strong></td>
+              <td>81.73 → 86.81 <span class="tag is-success is-small">+5.08</span></td>
+              <td>55.62 → 66.17 <span class="tag is-success is-small">+10.55</span></td>
+              <td>77.65 → 86.53 <span class="tag is-success is-small">+8.88</span></td>
+              <td class="has-text-weight-bold has-text-success">+10.55% (GSM-Plus)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key findings section -->
+  <section class="section hero is-light">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered">Key Findings</h2>
+      <p class="subtitle has-text-centered is-6" style="margin-bottom: 3rem;">Breakthrough insights from our research that advance the field of autonomous language model reasoning</p>
+
+      <div class="key-findings-grid">
+        <!-- Finding 1 -->
+        <div class="finding-card">
+          <div class="finding-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <div class="finding-content">
+            <h4 class="finding-title">Self-Evolution Works</h4>
+            <div class="finding-metric">8.92% Average Gain</div>
+            <p class="finding-description">Our DTE framework enables models to autonomously improve their reasoning capabilities through multi-agent debate traces, achieving substantial accuracy improvements across challenging mathematical reasoning tasks without additional supervision.</p>
+          </div>
+        </div>
+
+        <!-- Finding 2 -->
+        <div class="finding-card">
+          <div class="finding-icon">
+            <i class="fas fa-sync-alt"></i>
+          </div>
+          <div class="finding-content">
+            <h4 class="finding-title">RCR Prompting Excellence</h4>
+            <div class="finding-metric">50% Sycophancy Reduction</div>
+            <p class="finding-description">Our Reflect-Critique-Refine prompting strategy explicitly forces agents to identify, critique, and correct reasoning errors, halving the sycophancy rate from 0.28 to 0.13 and improving debate quality significantly.</p>
+          </div>
+        </div>
+
+        <!-- Finding 3 -->
+        <div class="finding-card">
+          <div class="finding-icon">
+            <i class="fas fa-globe"></i>
+          </div>
+          <div class="finding-content">
+            <h4 class="finding-title">Cross-Domain Generalization</h4>
+            <div class="finding-metric">5.8% Average Improvement</div>
+            <p class="finding-description">Models evolved on one dataset (e.g., GSM8K) show consistent improvements on other reasoning tasks, suggesting that DTE captures general reasoning heuristics rather than dataset-specific patterns.</p>
+          </div>
+        </div>
+
+        <!-- Finding 4 -->
+        <div class="finding-card">
+          <div class="finding-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <div class="finding-content">
+            <h4 class="finding-title">Single-Model Efficiency</h4>
+            <div class="finding-metric">Multi-Agent Benefits</div>
+            <p class="finding-description">DTE successfully distills the reasoning insights from multi-agent debate into efficient single-model inference, eliminating the computational overhead of running multiple models at inference time.</p>
+          </div>
+        </div>
+
+        <!-- Finding 5 -->
+        <div class="finding-card">
+          <div class="finding-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="finding-content">
+            <h4 class="finding-title">GRPO Superiority</h4>
+            <div class="finding-metric">Best Training Method</div>
+            <p class="finding-description">Group Relative Policy Optimization consistently outperforms supervised fine-tuning (SFT) and Direct Preference Optimization (DPO), providing better reward balancing and policy stability while maintaining low KL divergence.</p>
+          </div>
+        </div>
+
+        <!-- Finding 6 -->
+        <div class="finding-card">
+          <div class="finding-icon">
+            <i class="fas fa-thermometer-half"></i>
+          </div>
+          <div class="finding-content">
+            <h4 class="finding-title">Temperature Annealing</h4>
+            <div class="finding-metric">1/3 KL Drift Reduction</div>
+            <p class="finding-description">For smaller models (&lt;3B parameters), linear temperature decay from 0.7 to 0.3 across evolution rounds reduces KL drift by 1/3 and recovers up to 76% of performance loss, preventing model collapse.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BibTeX citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{srivastava2025debate,
+  title={Debate, Train, Evolve: Self-Evolution of Language Model Reasoning},
+  author={Srivastava, Gaurav and Bi, Zhenyu and Lu, Meng and Wang, Xuan},
+  booktitle={Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing},
+  year={2025},
+  note={To appear}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a>.
+              This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"
+                target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
