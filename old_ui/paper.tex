@@ -1,0 +1,695 @@
+\documentclass[11pt]{article}
+\pdfoutput=1
+\usepackage[final]{acl}
+\usepackage{siunitx} % For better number alignment
+% \usepackage{subfig}
+\usepackage{subcaption}
+\usepackage{color,soul}
+% Font packages
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata} 
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{pifont}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}  % Added for math symbols
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% ---------- Preamble (put once) ----------
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\SetKwComment{tcp}{\small\textcolor{gray}{$\triangleright$\,}}{}
+\DontPrintSemicolon
+
+
+% Table packages
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{tabulary}
+\usepackage{adjustbox}
+\usepackage{siunitx}
+\usepackage{makecell}
+
+% Graphics and color packages
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{xcolor}
+\usepackage{xcolor,colortbl}
+
+% Define colors for arrows
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{darkred}{rgb}{0.6, 0.0, 0.0}
+
+% TikZ and tcolorbox packages
+\usepackage[most]{tcolorbox} 
+\usepackage{cleveref}
+\usepackage{makecell}
+
+% Define tcolorbox styles
+\newtcbtheorem[auto counter, number within=section, 
+crefname={example}{Example},
+Crefname={Example}{Example}]
+{exmp}{Exam\smash{p}le} 
+{colback=pale_red!5, colframe=DarkPurple, left=.02in, right=.02in,bottom=.02in, top=.02in}{exmp}  
+
+% Define navy color if not already defined
+\definecolor{navy}{rgb}{0.0, 0.0, 0.5}
+
+% \newtcbtheorem[auto counter, 
+% crefname={prompt}{Prompt},
+% Crefname={Prompt}{Prompt}]
+% {prompt}{Prom\smash{p}t} 
+% {colback=pale_red!5, colframe=DarkPurple, left=.02in, right=.02in,bottom=.02in, top=.02in}{prompt}  
+
+
+% Updated tcolorbox style for prompt
+\newtcbtheorem[auto counter, 
+crefname={prompt}{Prompt},
+Crefname={Prompt}{Prompt}]
+{prompt}{Prom\smash{p}t} 
+{colback=blue!0, colframe=navy, left=.02in, right=.02in,bottom=.02in, top=.02in}{prompt}  
+
+% \usepackage{enumitem}
+\usepackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=True,
+    showstringspaces=False,
+    frame=none,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{green!50!black},
+    morekeywords={import, from, as, def, return, in, if, else, elif, for, while, try, except, with, class, self, True, False, None, and, or, not, is, pass},
+} 
+
+% Define colors
+\definecolor{Violet}{RGB}{148,0,211}    
+\definecolor{DarkPurple}{RGB}{75,0,130} 
+\definecolor{lightergray}{RGB}{230,230,230}
+\definecolor{DarkRed}{RGB}{130,25,0}
+\definecolor{PurpleRed}{RGB}{204,0,102}
+\definecolor{DarkGreen}{RGB}{30,130,30}
+\definecolor{DarkBlue}{RGB}{0,0,250}
+\definecolor{DarkYellow}{RGB}{255,128,0}
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{lightgreen}{RGB}{231,255,219}
+\definecolor{lightred}{RGB}{252,231,234}
+\definecolor{lightyellow}{RGB}{250,253,191}
+\definecolor{lightpurple}{RGB}{229,204,255}
+\definecolor{lightblue}{RGB}{229,246,254}
+\definecolor{value-modification}{RGB}{250, 217, 86}
+\definecolor{digit-expansion}{RGB}{216, 194, 104}
+\definecolor{integer-decimal-fraction}{RGB}{240, 133, 51}
+\definecolor{semantic-paraphrasing}{RGB}{85, 157, 63}
+\definecolor{complexity-increasing}{RGB}{58, 120, 175}
+\definecolor{question-transformation}{RGB}{174, 205, 225}
+\definecolor{interference-injection}{RGB}{255,204,229}
+\definecolor{remove-constrain}{RGB}{204,204,255}
+
+% Custom commands
+\newcommand{\xmark}{\textcolor{red}{\ding{55}}} 
+\newcommand{\cmark}{\textcolor{DarkGreen}{\ding{51}}}
+\newcommand{\addmark}{\textcolor{DarkYellow}{\ding{59}}}
+\newcommand{\editmark}{\textcolor{blue}{\ding{34}}}
+
+\definecolor{pale_green}{rgb}{0.55,0.75,0.60}
+\definecolor{pale_red}{rgb}{0.90,0.61,0.58}
+\definecolor{pale_yellow}{rgb}{0.95,0.92,0.72}
+
+% AIbox definition
+\tcbset{
+  aibox/.style={
+    width=\textwidth,
+    top=0pt, bottom=0pt, left=5pt, right=5pt,
+    colback=white,
+    colframe=black,
+    colbacktitle=black,
+    enhanced,
+    center,
+    attach boxed title to top left={yshift=-0.1in,xshift=0.15in},
+    boxed title style={boxrule=0pt,colframe=white,},
+  }
+}
+\newtcolorbox{AIbox}[2][]{aibox,title=#2,#1}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}} 
+
+% mathematics
+\usepackage{amsmath,amssymb,bbm}   % maths + indicator
+% \usepackage{algorithm,algpseudocode} % algorithm environment
+
+% (optional but often handy)
+\usepackage{graphicx}    % figures
+\usepackage{booktabs}    % nicer tables
+
+\newcounter{testexample}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+
+% \usepackage[encapsulated]{CJK}
+% \newcommand{\cjktxt}[1]{\begin{CJK}{UTF8}{gbsn}#1\end{IKJ}}
+
+% \hyphenation{Debate, Train, Evolve}
+
+
+% Define colors
+\definecolor{defaultcolor}{HTML}{DAE8FC} % Light Blue
+\definecolor{deterministiccolor}{HTML}{D5E8D4} % Light Green
+\definecolor{exploratorycolor}{HTML}{FFF2CC} % Light Yellow
+\definecolor{detexploratorycolor}{HTML}{FADBD8} % Light Red/Pink
+\definecolor{darkblue}{RGB}{25,25,112} % or try (25,25,112) for MidnightBlue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\title{\textsc{Debate, Train, Evolve:} Self-Evolution of Language Model Reasoning}
+
+
+
+\author{
+ \textbf{Gaurav Srivastava\textsuperscript{$\heartsuit$}},
+ \textbf{Zhenyu Bi\textsuperscript{$\heartsuit$}},
+ \textbf{Meng Lu\textsuperscript{$\heartsuit$}},
+ \textbf{Xuan Wang\textsuperscript{$\heartsuit$ \thanks{Corresponding Author}}}
+\\
+ \textsuperscript{$\heartsuit$}Department of Computer Science, Virginia Tech, Blacksburg, VA, USA,
+\\
+ \normalsize{
+        \texttt{(\href{gks@vt.edu}{gks}, \href{zhenyub@vt.edu}{zhenyub}, \href{menglu@vt.edu}{menglu}, \href{xuanw@vt.edu}{xuanw})@vt.edu}
+ }
+ \\
+ \normalsize{
+   \href{https://your-project-page.com}{\textcolor{darkblue}{\texttt{debate-train-evolve.github.io}}}
+}
+}
+
+\begin{document}
+
+\maketitle
+
+
+% \hspace{-20em}
+
+
+
+
+\begin{abstract}
+Large language models (LLMs) have improved significantly in their reasoning through extensive training on massive datasets. However, relying solely on additional data for improvement is becoming increasingly impractical, highlighting the need for models to autonomously enhance their reasoning without external supervision. In this paper, we propose \textsc{Debate, Train, Evolve (DTE)}, a novel ground truth-free training framework that uses multi-agent debate traces to evolve a single language model. We also introduce a new prompting strategy \textsc{Reflect-Critique-Refine}, to improve debate quality by explicitly instructing agents to critique and refine their reasoning. Extensive evaluations on \textbf{five} reasoning benchmarks with \textbf{six} open-weight models show that our DTE framework achieve substantial improvements, with an average accuracy gain of \textbf{8.92\%} on the challenging GSM-PLUS dataset. Furthermore, we observe strong cross-domain generalization, with an average accuracy gain of \textbf{5.8\%} on all other benchmarks, suggesting that our method captures general reasoning capabilities. Our framework code and trained models are publicly available at \href{https://github.com/your-repo}{\texttt{github.com/your-repo}}.
+\end{abstract}
+
+
+
+
+
+\section{Introduction}
+
+Over the past few years, the advancements in large language models (LLMs) have largely depended on training over massive datasets \cite{abdin2024phi, abdin2025phi}. However, eventually, we will approach a saturation point where feeding more data into these models may not further improve their reasoning capabilities \cite{costello2025think}. This motivates a new research question: \emph{How can language models continue to improve without relying on additional external supervision?} 
+
+Recent approaches attempt to overcome the data bottleneck by enabling models to generate and learn from synthetic data, which is generated by automatically expanding a small set of seed tasks into large synthetic instruction datasets \cite{wang2022self, zeng2024automaticinstructionevolvinglarge}. Other methods \cite{madaan2023self, Jiang2023SelfEvolveAC, Gou2023CRITICLL, Peng2023CheckYF, zelikman2024star, costello2025think} refine model-generated outputs through iterative self-feedback or preference optimization. Despite their effectiveness, these self-evolution strategies predominantly rely on judgments from a single model or a teacher-student configuration, often leading to confirmation bias and insufficient reasoning diversity. 
+
+To address these limitations, one promising direction emerged is multi-agent debate (MAD) \cite{du2023improving}. It involves multiple models independently generating and critically analyzing each other's answers, helping to reveal subtle reasoning errors often overlooked by individual models \cite{liang2023encouraging,Wang2024RethinkingTB}. Although MAD shows improved reasoning accuracy, current works predominantly use MAD as an inference-time technique \cite{smit2023should}, requiring multiple models to be run simultaneously for each query. This substantially increases computational overhead and latency \cite{subramaniam2025multiagent}, making MAD impractical for large-scale deployments. This motivates our research question: \emph{Can we \textbf{evolve} a single model reasoning by fine-tuning on these debate traces?} 
+
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=1\linewidth]{graphical_abstract_new.jpg}
+            \caption{Overview of the proposed \textbf{\textsc{Debate–Train–Evolve}} framework. \textit{Left}—\textbf{Debate}: Several agents debate until they converge on a consensus \textcolor{darkgreen}{(green \ding{51})} or expose a wrong path \textcolor{red}{(red \ding{55})}. \textit{Centre}—\textbf{Train}: we remove pure debate elements, keep the high-quality reasoning traces and consensus answer, and use them to fine-tune a single policy with GRPO. \textit{Right}—\textbf{Evolve}: the evolved agent replaces its earlier self, so future inference require just one forward pass yet they outperform the committee on maths, science, and commonsense benchmarks.}
+    \label{fig:main}
+\end{figure*}
+
+
+
+Building upon this intuition, we propose \textsc{Debate, Train, Evolve (DTE)}, a novel framework that combines the strengths of MAD with efficient single-model inference. Specifically, we introduce a ground-truth-free training approach in which a model learns from its own debate traces generated during MAD, thereby evolving autonomously over iterative training cycles. Our framework addresses key challenges of existing methods by extracting high-quality reasoning insights from diverse multi-agent interactions, thus avoiding single-model biases and computational inefficiencies.
+
+\textbf{First}, we conduct a large-scale empirical analysis of MAD using open-source models, where we identify limitations of the original MAD prompting approach, particularly in smaller models \cite{du2023improving}. To address this, we propose a \textsc{Reflect-Critique-Refine (RCR)} prompting strategy, which explicitly forces agents to identify, critique, and correct reasoning errors in both their own and peers' answers. \textbf{Second,} using this prompting strategy, we build our \textsc{DTE} framework (Figure \ref{fig:main}). \textbf{Finally}, we find that models with $<3B$ parameters suffer accuracy loss \cite{srivastava2025towards} after second evolution round; our controlled study shows that the problem correlates with large temperature-induced variance and high KL divergence from the base policy. Lowering the sampling temperature from 0.7 to 0.3 cuts the KL drift by $1/3rd$ and recovers up to 76\% of the lost performance, preventing catastrophic forgetting in smaller models without extra supervision.
+
+Our experiments show significant gains in reasoning performance across multiple datasets. Specifically, our evolved models show an average accuracy improvement of \textbf{8.92\%} on the challenging GSM-PLUS dataset compared to their original versions. Moreover, our framework achieves notable cross-domain generalization, enhancing model performance across datasets not seen during training. These results confirm that our \textsc{Debate, Train, Evolve} method successfully distills multi-agent debate's insights into efficient single-model inference, bridging the gap between computational efficiency and advanced reasoning capabilities.
+
+
+
+\section{Related Work}
+\label{sec:related_work}
+\paragraph{Multi-Agent Debate Approaches} \citet{du2023improving} first showed that letting several large models debate improves accuracy on maths, strategy, and factual QA without any new parameters. Later, \citet{liang2023encouraging} highlighted the risk of \emph{degeneration‑of‑thought}: a single agent quickly converges on one path, whereas a two‑debater plus judge setup maintains diversity and outperforms GPT‑4 on tricky arithmetic. \textsc{RECONCILE} \citep{chen2023reconcile} mixes agents from different model families, reaches consensus through confidence‑weighted votes, and adds up to eleven points on seven reasoning benchmarks. \citet{smit2023should} shows that MAD beats sampling ensembles only after careful tuning. Finally, works like PREDICT~\citep{park2024predict} apply multi-agent debate to tasks beyond QA, such as hate-speech classification, where agents reason under different guidelines. Recent advances further incorporate explicit reinforcement learning into the debate process. For example, the ACC-Collab framework \cite{estornell2024acc} utilized an actor-critic approach to explicitly optimize agent collaboration, yielding superior performance on reasoning tasks. 
+
+\vspace{-1em}
+
+\paragraph{Self-Evolution in Language Models} \textsc{SELF‑INSTRUCT} \citep{wang2022self} prompts GPT‑3 to write 52000 novel instructions plus answers and then fine‑tunes on its own output, reducing the gap to InstructGPT by thirty‑three points on Super‑Natural‑Instructions without extra human labels. \textsc{STaR} \citep{zelikman2024star} augments a few chain‑of‑thought exemplars by letting the model explain wrong answers in reverse, doubling CommonsenseQA accuracy for a 350M model. \textsc{SELF‑REFINE} \citep{madaan2023self} and the broader \textsc{SELF} framework \citep{lu2023self} turn one model into writer, critic and re‑writer, looping feedback at inference or during fine‑tuning to improve on GSM8K by around seven points. Instruction‑tuning variants refine the idea: \textsc{Self‑Refine Instruction‑Tuning} \citep{ranaldi2024self} pairs Llama‑2 and Mistral students with large teacher rationales and then lets each student prefer its own better reasoning, closing the size gap on commonsense and math tasks. More recently, \textsc{Think, Prune, Train, Improve} \citep{costello2025think} shows that careful filtering of self‑generated traces can raise Gemma‑2B to 58\% on GSM8K and push Llama‑3‑70B beyond GPT‑4o. These studies confirm that single‑agent loops, with or without ground truth, can expand a model’s ability. 
+
+Despite these works, two things remain unexplored: \textbf{\textit{1)}} Fully autonomous, ground-truth-free self-evolution; \textbf{\textit{2)}} Integration of MAD into model evolution. Our work addresses this by the \textsc{Debate, Train, Evolve} framework, which combines MAD with self-supervised reinforcement learning (GRPO) to enable models to autonomously evolve their reasoning capabilities.
+
+
+
+\section{\textsc{Debate, Train, Evolve} Framework}
+\label{sec:dte_framework}
+
+In this section, we first analyze limitations of existing multi-agent debate approaches (§\ref{sec:mad_analysis}), introduce our improved prompting strategy (§\ref{sec:rcr_prompt}), and then detail the mathematical framework for training models using debate-derived rewards (§\ref{sec:grpo_training}). Our DTE framework uses multi-agent debate to generate high-quality reasoning traces, then distills these traces into a single model through group-relative policy optimization \cite{shao2024deepseekmathpushinglimitsmathematical}.
+
+\subsection{Preliminary Analysis of Multi-Agent Debate}
+\label{sec:mad_analysis}
+
+Let $\mathcal{A} = \{a_1, \ldots, a_N\}$ denote a set of $N$ language model agents, and let $q$ represent an input query. In the standard multi-agent debate framework, each agent $a_i$ independently generates an initial response $(y_i^{(0)}, r_i^{(0)})$ consisting of an answer $y_i^{(0)}$ and rationale $r_i^{(0)}$. Agents then engage in $T$ rounds of debate, where in round $t$, each agent observes peer responses $\{(y_j^{(t-1)}, r_j^{(t-1)})\}_{j \neq i}$ and produces an updated response $(y_i^{(t)}, r_i^{(t)})$.
+
+Our empirical analysis of this standard approach revealed two critical failure modes. First, we observed high rates of \textbf{\emph{sycophancy}}, where agents abandon correct answers in favor of incorrect but confidently-stated peer solutions. Second, we identified a \textbf{\emph{verbosity bias}} where agents preferentially adopt longer rationales regardless of logical validity \cite{saito2023verbosity}. These effects resulted in degraded debate quality (substantial fraction of [correct $\rightarrow$ incorrect] transitions during debate), particularly for smaller models where sycophancy rates exceeded 28\% on average.
+
+
+% Formally, we define the sycophancy rate as:
+% $$\text{Syc} = \frac{1}{|\mathcal{D}|} \sum_{d \in \mathcal{D}} \mathbb{1}[\exists t: y_i^{(t-1)} = y^* \wedge y_i^{(t)} \neq y^* \wedge |r_i^{(t)}| \approx |r_i^{(t-1)}|]$$
+% where $y^*$ denotes the correct answer and $\mathbb{1}[\cdot]$ is the indicator function.
+
+\subsection{\textsc{Reflect-Critique-Refine} Prompting Strategy}
+\label{sec:rcr_prompt}
+
+To address these limitations, we introduce the \textsc{RCR} prompting strategy. Unlike standard debate prompts that simply request answer revision \cite{madaan2023self,Gou2023CRITICLL,Peng2023CheckYF}, RCR structures agent responses through three explicit phases: \textbf{\textit{1) Reflect}}: Each agent $a_i$ must identify potential errors in its current reasoning $r_i^{(t-1)}$ by generating a self-critique $c_i^{\text{self}}$. \textbf{\textit{2) Critique}}: The agent then evaluates exactly two peer rationales, producing critiques $\{c_i^{j}\}_{j \in \mathcal{P}_i}$ where $|\mathcal{P}_i| = 2$ and $\mathcal{P}_i \subset \mathcal{A} \setminus \{a_i\}$. \textbf{\textit{3) Refine}}: Finally, the agent updates its response to $(y_i^{(t)}, r_i^{(t)})$ subject to the constraint that if $y_i^{(t)} \neq y_i^{(t-1)}$, then $r_i^{(t)}$ must contain at least one novel reasoning step not present in $\bigcup_{j, s<t} r_j^{(s)}$.
+
+Phrases like \textit{“identify any errors”} reliably trigger negative tokens \textbf{(“error”, “mistake”, “step X is wrong”)} which LLMs have learned during supervised finetuning. By specifying valid next moves (defend/correct/adopt), we implicitly shape the log‑probability mass toward useful trajectories, shrinking the space of rambling answers. The single‑step explanation requirement forces agents to think before copying and reduces sycophancy by requiring agents to justify answer changes with novel reasoning, while the fixed critique quota prevents unbounded verbosity. Algorithm \ref{alg:mad} presents the complete debate protocol, where the debate terminates when either consensus is reached (all $y_i^{(t)}$ identical) or after $T$ rounds, with the final answer determined by majority vote.
+
+\begin{algorithm}[t]
+\small
+\caption{Multi-Agent Debate with \textsc{RCR} Prompting}
+\label{alg:mad}
+\SetAlgoNoLine
+\KwIn{query $q$, agents $\mathcal{A} = \{a_1, \ldots, a_N\}$, max rounds $T$}
+\KwOut{consensus answer $y^*$ and reasoning traces $\mathcal{R}$}
+\textbf{Round 0:} Each $a_i \in \mathcal{A}$ generates $(y_i^{(0)}, r_i^{(0)}) \sim \pi_{a_i}(\cdot | q)$\;
+\If{all $y_i^{(0)}$ are identical}{\Return $(y_i^{(0)}, \{r_i^{(0)}\}_{i=1}^N)$}
+\For{$t = 1$ \KwTo $T$}{
+  \ForEach{agent $a_i \in \mathcal{A}$}{
+    Receive peer responses: $\mathcal{P}_i^{(t-1)} = \{(y_j^{(t-1)}, r_j^{(t-1)})\}_{j \neq i}$\;
+    \textbf{Reflect:} Generate self-critique $c_i^{\text{self}}$ identifying errors in $r_i^{(t-1)}$\;
+    \textbf{Critique:} Select two peers and generate critiques $\{c_i^j\}_{j \in S_i}$ where $|S_i| = 2$\;
+    \textbf{Refine:} Update response $(y_i^{(t)}, r_i^{(t)})$ with novel reasoning if $y_i^{(t)} \neq y_i^{(t-1)}$\;
+  }
+  \If{all $y_i^{(t)}$ are identical}{\Return $(y_i^{(t)}, \bigcup_{i,s \leq t} r_i^{(s)})$}
+}
+\Return $(\text{majority\_vote}(\{y_i^{(T)}\}), \bigcup_{i,t} r_i^{(t)})$
+\end{algorithm}
+
+\subsection{Training via Group Relative Policy Optimization}
+\label{sec:grpo_training}
+
+We now formalize how debate traces are used to train a single language model. Let $\pi_\theta$ denote a language model policy parameterized by $\theta$, which models the conditional distribution over token sequences: $\pi_\theta(a|s) = \prod_{t=1}^{|a|} \pi_\theta(a_t | s, a_{<t})$, where $s$ is the input state (query) and $a = (a_1, \ldots, a_{|a|})$ is the generated token sequence.
+
+\paragraph{Debate Trace Extraction and Reward Design} Given a query $q$, we run multi-agent debate using Algorithm \ref{alg:mad} to obtain a consensus answer $y^*$ and a set of reasoning traces $\mathcal{R} = \{r_i^{(t)}\}_{i,t}$. From these traces, we extract a consolidated rationale $R$ by identifying reasoning steps that either (i) appear in multiple agents' responses or (ii) introduce novel symbolic manipulations. This yields a training instance $(q, y^*, R)$. For each generated response $y$ to query $q$, we define a shaped reward function:
+
+\vspace{-1.5em}
+
+\begin{align*}
+r(q, y) =\;& 
+    w_{\text{ans}} \cdot \mathbb{1}[y = y^*] 
+    + w_{\text{fmt}} \cdot f_{\text{format}}(y) \nonumber \\
+    &+ w_{\text{len}} \cdot \exp(-|y|/\tau)
+\end{align*}
+
+where $\mathbb{1}[y = y^*]$ indicates answer correctness (verified via exact string match after normalization), $f_{\text{format}}$ checks adherence to the XML template structure, $|y|$ denotes token length, and $(w_{\text{ans}}, w_{\text{fmt}}, w_{\text{len}}) = (2.0, 0.5, 0.5)$ with $\tau = 120$.
+
+\paragraph{Group Relative Advantage Estimation} For training, we use Group Relative Policy Optimization (GRPO), which eliminates the need for a separate value function by estimating advantages through group-wise comparisons. For each query $q$ in our training batch, we sample $G$ responses $\{o_1, \ldots, o_G\}$ from the current policy $\pi_{\theta_{\text{old}}}$. Each response $o_i$ receives a scalar reward $r_i = r(q, o_i)$.
+
+Instead of learning a value function $V(s)$ to estimate expected returns, GRPO computes advantages using the group statistics. The advantage for response $o_i$ at token position $t$ is:
+$$\hat{A}_{i,t} = \frac{r_i - \bar{r}}{\sigma_r + \epsilon}$$
+where $\bar{r} = \frac{1}{G}\sum_{j=1}^{G} r_j$ is the mean reward, $\sigma_r = \sqrt{\frac{1}{G}\sum_{j=1}^{G}(r_j - \bar{r})^2}$ is the standard deviation, and $\epsilon = 10^{-8}$ prevents division by zero.
+
+This formulation provides several key benefits. \textbf{\textit{First,}} responses with above-average rewards receive positive advantages, encouraging the model to increase their likelihood. \textbf{\textit{Second,}} normalization by standard deviation ensures that advantages remain stable across different reward scales. \textbf{\textit{Third,}} using group statistics rather than a learned baseline reduces memory requirements by eliminating the value network.
+
+\paragraph{Policy Optimization Objective} Given the group-relative advantages, we optimize the policy using a clipped surrogate objective with KL regularization. The GRPO loss for a single query is:
+
+\vspace{-1.5em}
+
+$$\mathcal{L}_{\text{GRPO}}(\theta) = \frac{1}{G}\sum_{i=1}^{G} \frac{1}{|o_i|}\sum_{t=1}^{|o_i|} \left[ \ell_{\text{clip}}(i,t) - \beta \cdot D_{\text{KL}}^{(i,t)} \right]$$
+
+where the clipped policy gradient loss is:
+
+\vspace{-1.5em}
+
+\begin{align*}
+\ell_{\text{clip}}(i,t) = -\min\Big( 
+    & \rho_{i,t} \cdot \hat{A}_{i,t}, \\
+    & \text{clip}(\rho_{i,t}, 1-\epsilon, 1+\epsilon) \cdot \hat{A}_{i,t} 
+\Big)
+\end{align*}
+
+
+Here, $\rho_{i,t} = \frac{\pi_\theta(a_{i,t} | q, o_{i,<t})}{\pi_{\theta_{\text{old}}}(a_{i,t} | q, o_{i,<t})}$ is the importance ratio between the new and old policies, and $\epsilon = 0.2$ is the clipping threshold. The clipping mechanism prevents destructively large policy updates: when $\rho_{i,t}$ exceeds $1+\epsilon$ or falls below $1-\epsilon$, the gradient contribution is capped.
+
+The KL divergence term $D_{\text{KL}}^{(i,t)}$ regularizes the policy to prevent excessive deviation from a reference model $\pi_{\text{ref}}$ (typically the initial supervised fine-tuned model):
+$$D_{\text{KL}}^{(i,t)} = \log\frac{\pi_\theta(a_{i,t} | q, o_{i,<t})}{\pi_{\text{ref}}(a_{i,t} | q, o_{i,<t})}$$
+
+with regularization strength $\beta = 0.02$. This KL penalty serves a different purpose than the clipping: while clipping prevents large single-step updates, the KL term anchors the policy to maintain linguistic coherence and prevent catastrophic forgetting.
+
+\paragraph{Gradient Estimation and Optimization} Gradient of $\mathcal{L}_{\text{GRPO}}$ with respect to $\theta$ is estimated using the REINFORCE algorithm. For each token $a_{i,t}$ in response $o_i$, the gradient contribution is:
+
+\vspace{-1.5em}
+
+{\small
+\begin{equation*}
+\nabla_\theta \mathcal{L}_{\text{GRPO}} 
+= -\mathbb{E}_{o_i \sim \pi_{\theta_{\text{old}}}}
+\left[ \sum_{t=1}^{|o_i|} \nabla_\theta 
+\log \pi_\theta(a_{i,t}|q, o_{i,<t}) \cdot g(i,t) \right]
+\end{equation*}
+}
+
+
+where $g(i,t)$ is the effective advantage after clipping and KL regularization. This expectation is approximated through Monte Carlo sampling using the $G$ generated responses. We optimize using AdamW with learning rate $\eta = 2 \times 10^{-5}$, weight decay $\lambda = 0.01$, and a 50-step linear warmup. To enhance training efficiency, we use LoRA (Low-Rank Adaptation) with rank $r = 128$ and dropout probability $p = 0.05$, applying adaptations to attention and MLP projection matrices while keeping embeddings and layer normalizations frozen.
+
+\subsection{Evolution through Iterative Training}
+\label{sec:evolution}
+
+The complete \textsc{DTE} framework operates as an iterative process, formalized in Algorithm \ref{alg:dte}. Starting with a base policy $\pi_{\theta_0}$, we perform evolution rounds where each round $k$ consists of: \textbf{\textit{1) Debate Generation}}: Sample a batch of queries $\mathcal{Q}_k$ and generate debate traces using RCR-prompted multi-agent debate (Algorithm \ref{alg:mad}), producing dataset $\mathcal{D}_k = \{(q, y^*, R)\}$. \textbf{\textit{2) Policy Update}}: Fine-tune $\pi_{\theta_{k-1}}$ on $\mathcal{D}_k$ using GRPO to obtain $\pi_{\theta_k}$. \textbf{\textit{3) Agent Replacement}}: Replace the previous version in the debate ensemble with the evolved policy.
+
+The process continues until validation performance plateaus or a maximum number of iterations is reached. For smaller models ($<3$B parameters), we implement temperature annealing from $T=0.7$ to $T=0.3$ across rounds to mitigate KL divergence growth and prevent catastrophic forgetting, as high-temperature sampling in later rounds can cause excessive policy drift.
+
+This framework achieves autonomous reasoning improvement by combining the exploration benefits of multi-agent debate with the efficiency of single-model deployment, while GRPO's group-relative formulation provides stable training without requiring auxiliary value networks.
+
+\begin{algorithm}[t]
+\small
+\caption{\textsc{Debate, Train, Evolve}}
+\label{alg:dte}
+\SetAlgoNoLine
+\KwIn{base policy $\pi_{\theta_0}$, agent pool $\mathcal{A}_0 = \{\pi_{\theta_0}\} \cup \mathcal{B}$, query dataset $\mathcal{Q}$, max iterations $K$}
+\KwOut{evolved policy $\pi_{\theta_K}$}
+Initialize: $\theta \leftarrow \theta_0$\;
+\For{$k = 1$ \KwTo $K$}{
+  Sample batch $\mathcal{Q}_k \subset \mathcal{Q}$ of size $B$\;
+  $\mathcal{D}_k \leftarrow \emptyset$\;
+  \ForEach{query $q \in \mathcal{Q}_k$}{
+    $(y^*, \mathcal{R}) \leftarrow$ Algorithm \ref{alg:mad} with agents $\mathcal{A}_{k-1}$ on query $q$\;
+    $R \leftarrow$ ExtractRationale($\mathcal{R}$) \tcp{Extract consolidated reasoning}
+    $\mathcal{D}_k \leftarrow \mathcal{D}_k \cup \{(q, y^*, R)\}$\;
+  }
+  \For{epoch $e = 1$ \KwTo $E$}{
+    \ForEach{$(q, y^*, R) \in \mathcal{D}_k$}{
+      Sample $G$ responses: $\{o_i\}_{i=1}^G \sim \pi_{\theta}(\cdot | q)$\;
+      Compute rewards: $r_i = r(q, o_i)$ for each $o_i$\;
+      Compute advantages: $\hat{A}_i = \frac{r_i - \bar{r}}{\sigma_r + \epsilon}$\;
+      Update $\theta$ via gradient step on $\mathcal{L}_{\text{GRPO}}(\theta)$\;
+    }
+  }
+  Update agent pool: $\mathcal{A}_k \leftarrow (\mathcal{A}_{k-1} \setminus \{\pi_{\theta_{k-1}}\}) \cup \{\pi_{\theta}\}$\;
+  \If{validation improvement $< \delta$}{\textbf{break}}
+}
+\Return $\pi_{\theta}$
+\end{algorithm}
+
+
+
+\begin{table*}[t]
+\centering
+\resizebox{\textwidth}{!}{% Resize table to fit within text width if needed
+\begin{tabular}{@{}l cc c cc c cc c @{}}
+\toprule
+\multirow{3}{*}{\textbf{Model}} & \multicolumn{3}{c}{\textbf{GSM8K}} & \multicolumn{3}{c}{\textbf{GSM-Plus}} & \multicolumn{3}{c}{\textbf{ARC-Challenge}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
+ & Original & 3 Agent & Evolved Single & Original & 3 Agent & Evolved Single & Original & 3 Agent & Evolved Single \\
+ & Model & MAD & Model (DTE) & Model & MAD & Model (DTE) & Model & MAD & Model (DTE) \\
+\midrule
+Qwen-2.5-1.5B & 62.77 & 72.33 & 73.09 (\textcolor{darkgreen}{+10.32 $\uparrow$}) & 42.00 & 53.33 & 55.92 (\textcolor{darkgreen}{+13.92 $\uparrow$}) & 69.21 & 68.52 & 68.36 (\textcolor{darkred}{-0.85 $\downarrow$}) \\
+Qwen-2.5-3B   & 84.08 & 85.14 & 86.05 (\textcolor{darkgreen}{+1.97 $\uparrow$})  & 61.75 & 68.00 & 69.50 (\textcolor{darkgreen}{+7.75 $\uparrow$})  & 83.53 & 84.64 & 83.95 (\textcolor{darkred}{-0.42 $\downarrow$}) \\ % Corrected Qwen-2.5-3B ARC-C original value for calculation
+Qwen-2.5-7B   & 90.67 & 91.21 & 88.32 (\textcolor{darkred}{-2.35 $\downarrow$})  & 68.62 & 74.17 & 74.71 (\textcolor{darkgreen}{+6.09 $\uparrow$})  & 87.22 & 91.64 & 90.89 (\textcolor{darkgreen}{+3.67 $\uparrow$}) \\
+Qwen-2.5-14B  & 92.80 & 93.33 & 93.74 (\textcolor{darkgreen}{+0.94 $\uparrow$})  & 71.79 & 77.25 & 78.88 (\textcolor{darkgreen}{+7.09 $\uparrow$})  & 90.27 & 93.77 & 93.13 (\textcolor{darkgreen}{+2.86 $\uparrow$}) \\
+Llama-3.2-3B      & 72.55 & 73.84 & 75.06 (\textcolor{darkgreen}{+2.51 $\uparrow$})  & 45.67 & 51.12 & 53.79 (\textcolor{darkgreen}{+8.12 $\uparrow$})  & 73.12 & 76.19 & 77.23 (\textcolor{darkgreen}{+4.11 $\uparrow$}) \\
+Llama-3.1-8B      & 81.73 & 82.18 & 86.81 (\textcolor{darkgreen}{+5.08 $\uparrow$})  & 55.62 & 60.79 & 66.17 (\textcolor{darkgreen}{+10.55 $\uparrow$}) & 77.65 & 85.07 & 86.53 (\textcolor{darkgreen}{+8.88 $\uparrow$}) \\
+\bottomrule
+\end{tabular}
+} % end resizebox
+\caption{\textbf{Performance of one \textsc{Debate–Train–Evolve} round.}  
+For six open-weight models we report test accuracy on three reasoning benchmarks in three settings: the single \emph{base} model (``Original’’), a \textbf{3-agent} debate using our \textsc{RCR} prompt (``MAD’’), and the \emph{evolved single} student obtained after one DTE round. \textcolor{darkgreen}{\textbf{Green}} numbers denote the absolute gain of the evolved model over its Original Model, \textcolor{darkred}{\textbf{red}} numbers a decrease in performance.}  
+\label{tab:dte_main}
+\end{table*}
+
+
+
+
+\section{Experiments}
+\label{sec:exp}
+
+\subsection{Experimental Setup}
+
+\paragraph{Datasets.} We conduct experiments on \textbf{five} public reasoning benchmarks: \textbf{\textit{1)} GSM8K} \cite{cobbe2021trainingverifierssolvemath}, \textbf{\textit{2)} GSM-Plus} \cite{li2024gsmpluscomprehensivebenchmarkevaluating} (harder numeric reasoning), \textbf{\textit{3) ARC-Easy}}, \textbf{\textit{4) ARC-Challenge}} \citep{clark2018thinksolvedquestionanswering}, and \textbf{\textit{5) CommonsenseQA}} \citep{talmor-etal-2019-commonsenseqa}.
+
+\paragraph{Baselines and models.}
+We conduct of RCR prompting study on \textbf{ten} open-weight models, Qwen (0.5-32B), Llama-3/8B, Mistral-7B, Phi-mini, and \textbf{two} proprietary models, GPT-4o and GPT-4o-mini. We study our DTE framework with 6 models (Qwen 1.5B-14B, Llama-3B and Llama-8B). \textbf{Baselines are:} (i) the single \emph{original} model; (ii) \emph{vanilla MAD} with the original MAD prompt \cite{du2023improving}.
+
+\paragraph{Parameter settings.} During debate we sample each agent once per query at temperature $T\!=\!1.0$ (exploratory) or $0.0$ (deterministic); mixed-teams use one exploratory and two deterministic agents. For evolution we adopt LoRA fine-tuning (rank 128, dropout 0.05) on attention and MLP projections, freezing embeddings and layer norms. GRPO is optimized with AdamW (learning rate $2{\times}10^{-5}$, weight decay 0.01, 50-step linear warm-up). Each evolution epoch processes 8k debate traces ($\sim$2 M tokens) and runs on A100-80 GB GPUs for a 7B model; larger models scale near-linearly.
+
+\paragraph{Evaluation metrics.} Task performance is \emph{exact match} for GSM-style datasets and \emph{accuracy} for MC-QA. For RCR evaluation, we also track \textbf{Sycophancy-Rate}: the fraction of agents switching to an incorrect peer answer without adding new reasoning; [incorrect $\rightarrow$ correct] instances. 
+
+
+
+\subsection{Main Results}
+Our main results are organized into three main parts: \textbf{\textit{(1)}} First, we evaluate the effectiveness of \textsc{Debate--Train--Evolve (DTE)} framework, \textbf{\textit{(2)}} Next, we test its generalization across different reasoning tasks by transferring evolved models to new datasets, and \textbf{\textit{(3)}} Finally, we analyze the extent of model self-evolution through iterative rounds. 
+
+\paragraph{\textsc{1) Overall DTE performance.}} \textbf{Evolved model using \textsc{DTE} shows an average gain of \textsc{8.92\% accuracy} on GSM-PLUS compared to its vanilla performance.} Table \ref{tab:dte_main} contrasts three settings: the single base model (``Original’’), a three-agent debate with our RCR prompt (``MAD’’), and the \emph{evolved single model} produced by one \textsc{Debate–Train–Evolve} pass. On \textbf{GSM-Plus}—the hard math dataset—DTE improves every model, with an average gain of \textbf{+2.38 points} over three-agent MAD. Qwen-1.5B shows the largest jump (+13.92 pts), confirming that \textbf{\textit{evolution is most helpful when the base model has head-room and the debate provides diverse traces.}} On \textbf{GSM8K} the average gain is smaller (\,+0.84 pts) because several models were already near their ceiling after debate. \textbf{ARC-Challenge} sees a mixed results: large models benefit (+3.67 pts for Qwen-7B, +8.88 pts for Llama-8B) while small models drift by $<1$ pt. Overall, DTE shows a mean improvement of \textbf{3.06 pts} over single model and \textbf{+1.09 pts} over MAD while restoring single-pass inference.
+
+
+
+\begin{table*}[t]
+\centering
+\resizebox{\textwidth}{!}{% Resize table to fit within text width
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+\multirow{3}{*}{\textbf{Model}} & \multicolumn{4}{c}{\textbf{Fine-tuned on GSM8K}} & \multicolumn{4}{c}{\textbf{Fine-tuned on GSM-Plus}} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-9}
+& GSM-Plus & ARC-Easy & ARC-Challenge & CommonsenseQA & GSM8K & ARC-Easy & ARC-Challenge & CommonsenseQA \\
+& ($\Delta$) & ($\Delta$) & ($\Delta$) & ($\Delta$) & ($\Delta$) & ($\Delta$) & ($\Delta$) & ($\Delta$) \\
+\midrule
+Qwen-2.5-1.5B
+& \textcolor{darkgreen}{+9.21 $\uparrow$}   % 51.21 - 42.00
+& \textcolor{darkred}{-1.60 $\downarrow$}    % 85.02 - 86.62
+& \textcolor{darkgreen}{+0.67 $\uparrow$}   % 69.88 - 69.21
+& \textcolor{darkred}{-2.23 $\downarrow$}    % 64.29 - 66.52
+& \textcolor{darkgreen}{+10.32 $\uparrow$}  % 73.09 - 62.77
+& \textcolor{darkred}{-1.52 $\downarrow$}    % 85.10 - 86.62
+& \textcolor{darkgreen}{+0.24 $\uparrow$}   % 69.45 - 69.21
+& \textcolor{darkred}{-2.31 $\downarrow$}    % 64.21 - 66.52
+\\
+Qwen-2.5-3B
+& \textcolor{darkgreen}{+3.79 $\uparrow$}   % 65.54 - 61.75
+& \textcolor{darkgreen}{+1.27 $\uparrow$}   
+& \textcolor{darkgreen}{+0.83 $\uparrow$}  
+& \textcolor{darkgreen}{+3.26 $\uparrow$}   % 75.92 - 72.66
+& \textcolor{darkgreen}{+1.36 $\uparrow$}   % 86.50 - 85.14
+& \textcolor{darkgreen}{+1.09 $\uparrow$}   % 94.15 - 93.06
+& \textcolor{darkgreen}{+0.60 $\uparrow$}   % 84.13 - 83.53
+& \textcolor{darkgreen}{+3.26 $\uparrow$}   % 75.92 - 72.66
+\\
+Qwen-2.5-7B
+& \textcolor{darkgreen}{+1.01 $\uparrow$}   % 69.63 - 68.62
+& \textcolor{darkgreen}{+1.73 $\uparrow$}   % 96.42 - 94.69
+& \textcolor{darkgreen}{+4.50 $\uparrow$}   % 91.72 - 87.22
+& \textcolor{darkgreen}{+3.40 $\uparrow$}   % 82.96 - 79.56
+& \textcolor{darkgreen}{+1.14 $\uparrow$}   % 91.81 - 90.67
+& \textcolor{darkgreen}{+1.69 $\uparrow$}   % 96.38 - 94.69
+& \textcolor{darkgreen}{+3.65 $\uparrow$}   % 90.87 - 87.22
+& \textcolor{darkgreen}{+3.32 $\uparrow$}   % 82.88 - 79.56
+\\
+Qwen-2.5-14B
+& \textcolor{darkgreen}{+1.67 $\uparrow$}   % 73.46 - 71.79
+& \textcolor{darkgreen}{+2.53 $\uparrow$}   % 98.19 - 95.66
+& \textcolor{darkgreen}{+3.42 $\uparrow$}   % 93.69 - 90.27
+& \textcolor{darkgreen}{+1.33 $\uparrow$}   % 83.70 - 82.37
+& \textcolor{darkgreen}{+0.53 $\uparrow$}   % 93.33 - 92.80
+& \textcolor{darkgreen}{+2.32 $\uparrow$}   % 97.98 - 95.66
+& \textcolor{darkgreen}{+4.01 $\uparrow$}   % 94.28 - 90.27
+& \textcolor{darkred}{-0.14 $\downarrow$}    % 82.23 - 82.37
+\\ 
+Llama-3.2-3B
+& \textcolor{darkgreen}{+6.71 $\uparrow$}   % 52.38 - 45.67
+& \textcolor{darkgreen}{+2.48 $\uparrow$}   % 87.12 - 84.64
+& \textcolor{darkred}{-1.11 $\downarrow$}    % 72.01 - 73.12
+& \textcolor{darkgreen}{+3.10 $\uparrow$}   % 68.14 - 65.04
+& \textcolor{darkgreen}{+3.80 $\uparrow$}   % 76.35 - 72.55
+& \textcolor{darkgreen}{+1.93 $\uparrow$}   % 86.57 - 84.64
+& \textcolor{darkred}{-3.92 $\downarrow$}    % 69.20 - 73.12
+& \textcolor{darkgreen}{+3.51 $\uparrow$}   % 68.55 - 65.04
+\\
+% \\ \addlinespace
+Llama-3.1-8B
+& \textcolor{darkgreen}{+8.13 $\uparrow$}   % 63.75 - 55.62
+& \textcolor{darkgreen}{+3.91 $\uparrow$}   % 93.01 - 89.10
+& \textcolor{darkgreen}{+6.74 $\uparrow$}   % 84.39 - 77.65
+& \textcolor{darkgreen}{+1.10 $\uparrow$}   % 74.12 - 73.02
+& \textcolor{darkgreen}{+5.15 $\uparrow$}   % 86.88 - 81.73
+& \textcolor{darkgreen}{+4.88 $\uparrow$}   % 93.98 - 89.10
+& \textcolor{darkgreen}{+7.84 $\uparrow$}   % 85.49 - 77.65
+& \textcolor{darkgreen}{+0.85 $\uparrow$}   % 73.87 - 73.02
+\\
+\bottomrule
+\end{tabular}
+} % end resizebox
+\caption{\textbf{Cross-domain generalisation of evolved students.}  Each cell shows the change in test accuracy (\(\Delta\), in points) after one DTE pass, relative to the same model before evolution. The table is split by the dataset used for fine-tuning—GSM8K (left block) or GSM-Plus (right block)—and reports transfer to four unseen targets. \textcolor{darkgreen}{\textbf{Green}} numbers signal gains, \textcolor{darkred}{\textbf{red}} numbers losses.}
+\label{tab:finetune_delta_performance}
+\end{table*}
+
+
+
+\paragraph{\textsc{2) Cross-domain generalization.}} \textbf{Our results suggests that DTE improves reasoning that travels beyond the source data, with larger models showing the most stable improvements.} Table \ref{tab:finetune_delta_performance} reports how well the evolved models generalize on other datasets. We test two scenarios: evolve using \textbf{\textit{(i)}} GSM8K; \textbf{\textit{(ii)}} GSM-Plus and test on four unseen datasets. When trained on GSM8K, every model gains on GSM-Plus (average \textbf{+5.8} pts) and on ARC-Challenge (+2.5 pts on average). ARC-Easy also sees small but consistent gains except for the 1.5B model, which drops 1.6 pts. CommonsenseQA improves for 5/6 models, indicating that the reward shaped from mathematical traces still helps improve on commonsense reasoning. Negative deltas are confined to the smallest model (Qwen-1.5B) and to a lesser degree Qwen-3B, suggesting that small models struggles to reconcile new skills with prior knowledge. In contrast, models $\geq7$B never lose more than 0.2 pts on any transfer task. Training on GSM-Plus and testing on GSM8K yields similar behaviour: large gains on the GSM8K (+3.7 pts on average) and moderate gains on others. \textbf{\textit{The symmetry suggests that DTE learns general reasoning heuristics (e.g. numeric decomposition, unit tracking) rather than memorising dataset-specific patterns.}}
+
+
+\paragraph{\textsc{3) How far can a model evolve?}} \textbf{Results show that one evolution round captures nearly all of the available gains.} Figure \ref{fig:evo_curve} reports accuracy over two evolution rounds for five models on GSM8K and GSM-Plus. Round 1 almost always helps: the smallest model (Qwen-1.5B) jumps from 42.0 $\rightarrow$ 55.9 on GSM-Plus and 62.8 $\rightarrow$ 73.1 on GSM8K, while Llama-8B gains 10.6 and 5.1 points on the same datasets. The only counter-example is Qwen-7B, which drops 2.4 points on GSM8K despite improving 6.1 on GSM-Plus; upon manual inspection we see that its Round-1 traces over-emphasise shortcut heuristics that hurt easier questions. \textbf{In Round 2, we observe  little improvement and sometimes the performance even drops.} Large models ($\geq7$ B) add at most +0.8 points, for Qwen-3B on GSM8K, and more often lose 0.4–1.4 points. The 1.5B model gives back 0.9 points on GSM8K and 2.8 on GSM-Plus, but still ends well above its starting point. Across all runs the mean forgetting $\text{Fgt}_2=\max_{t<2}(\text{Acc}_t-\text{Acc}_2)$ is 0.92 pts for models $\geq7$ B and 1.6 pts for smaller ones, confirming that smaller models suffers from catastrophic forgetting.
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{evol_round.pdf}
+    \caption{\textbf{Accuracy vs.\ evolution round.} }
+    \label{fig:evo_curve}
+\end{figure}
+
+
+
+
+
+% ###############################################################################################
+
+
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=\linewidth]{mad_results.pdf}
+    \caption{Results (\%) on: GSM8K, GSM-PLUS, and ARC-Challenge datasets. Performance is compared across three evaluation settings: single model inference, the Original Multi-Agent Debate (MAD@3) prompt, and our proposed RCR (RCR-MAD (Ours)@3) prompting.}
+    \label{fig:mad_results}
+\end{figure*}
+
+\subsection{Ablation Studies}
+\label{sec:ablation}
+
+
+
+\paragraph{\textsc{1) Effectiveness of the RCR prompt in MAD.}} \textbf{RCR prompting substantially boost performance over original MAD prompting} \cite{du2023improving}. Figure~\ref{fig:mad_results} compares single-model inference, the original debate prompt (MAD@3), and our \textsc{Reflect–Critique–Refine} (RCR-MAD@3) prompt. Across eight diverse models the RCR prompting raises three-agent accuracy by an average of \textbf{+1.9 pts} on GSM8K, \textbf{+3.7 pts} on GSM-Plus, and \textbf{+0.7 pts} on ARC-Challenge. The gain scales with task difficulty: GSM-Plus, which contains harder adversarial questions, benefits the most (up to +7.9 pts for Qwen-1.5B and +6.1 pts for Qwen-7B). On ARC-Challenge improvements are smaller but still positive for 6/8 models. \textbf{RCR prompting also significantly reduces sycophancy.} It \emph{halves} the mean sycophancy rate (from 0.28 to 0.13 on GSM-Plus) and narrows the verbosity gap by 43 \%, indicating that agents now switch answers only when they can articulate a new reasoning step. \textbf{\textit{These observations confirm that RCR is a necessary pre-step for producing high-quality traces later utilized by the DTE training loop.}}
+
+
+\paragraph{\textsc{2) How many agents are enough?}} 
+
+\textbf{Results shows that \emph{three} agents MAD captures 85-95 \% of the maximum gains.} Figure \ref{fig:scaling_mad} sweeps the agents size from $1 - 7$ and reports trends on four benchmark. We observe three clear patterns here: \textbf{\textit{1)} Beyond 3-agent the curve plateaus and even oscillates}, suggesting the marginal information added by the 4th or 5th agent. \textbf{\textit{2)} Small models benefit most from extra agents.} Already strong single-agent (Qwen-14B) adds minimal improvement upon scaling up after three. \textbf{\textit{3)} Harder tasks need (slightly) more agents.} On GSM-Plus the optimum often shifts to four or five agents: Qwen-7B reaches its peak accuracy (76.0\%) at 7 agents, 1.04 pts above the three-agent setting. ARC-Easy, a much easier dataset, saturates at 2 agents for every model; extra debaters add noise rather than insight.
+
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{scaling.pdf}
+    \caption{\textbf{Scaling up agents}  
+    Accuracy of four Qwen model sizes as the number of agents grows from 1-7. }
+    \label{fig:scaling_mad}
+\end{figure}
+
+
+\paragraph{\textsc{3) Does agent diversity matter?}} We observe two consistent trends here: \textbf{First,} when the individual agents have comparable standalone accuracy, cross-family mixtures beat homogeneous agents team, supporting the idea that architectural diversity yields complementary reasoning paths. \textbf{Second,} when the pool mixes a strong and a weaker model, the debate result gravitates toward the stronger member—adding the weaker agent neither helps nor seriously harms, suggesting that diversity only helps when all agents can contribute novel insights. Complete results for every dataset and roster is available in Appendix B.
+
+
+\paragraph{\textsc{4) Why GRPO over other fine-tuning methods?}} \textbf{GRPO consistently outperforms the alternatives,} indicating that its relative-advantage reward balances exploration and policy stability better than plain maximum-likelihood (SFT) or preference-only (DPO/PPO) updates. Table \ref{tab:rl_compare} compare three update rules under a fixed compute budget: (1) classical supervised fine-tuning on debate answers (SFT); (2) Direct Preference Optimisation using the majority vote as the preferred sample; (3) Group Relative Policy Optimisation (GRPO). GRPO delivers the largest accuracy jump on GSM-Plus for every model size. Both SFT and DPO give smaller gains and even slight regressions on the 3 B model, highlighting the risk of over-fitting when the reward ignores policy shift. We also observe that GRPO keeps $\text{KL}<0.24$ across sizes, whereas DPO averages 0.43. The relative-advantage term in GRPO therefore not only boosts reward but also constrains drift, reducing catastrophic forgetting.
+
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}l S[table-format=2.2] S[table-format=2.2] S[table-format=2.2] S[table-format=2.2]@{}}
+\toprule
+\textbf{Model} & {\shortstack{\textbf{Original} \\ \textbf{(GSM-Plus)}}} & {\textbf{SFT}} & {\textbf{DPO}} & {\textbf{GRPO}} \\
+\midrule
+Qwen-2.5-1.5B & 42.00 & 47.31 & 51.34 & \textbf{55.92} \\
+Qwen-2.5-3B   & 61.75 & 58.33 & 64.32 & \textbf{69.50} \\
+Qwen-2.5-7B   & 68.62 & 67.89 & 69.88 & \textbf{74.71} \\
+\bottomrule
+\end{tabular}
+\caption{Accuracy on GSM-Plus after \textbf{10K }training steps using three optimization objectives.}
+\label{tab:rl_compare}
+\end{table}
+
+
+
+\paragraph{\textsc{5) Data selection strategy.}} We test three data sampling schemes on GSM-Plus: \emph{Random-2K} selects 2000 examples uniformly from the full pool (10552); \emph{Debate-Only} keeps only data points where agents entered at least one critique round (\(t\ge1\)); \emph{All-Traces} trains on the entire cleaned set. Table \ref{tab:data_selection} shows that accuracy rises monotonically with coverage: the full corpus beats Debate-Only by \textbf{4.43 pts} (avg) and Random-2K by \textbf{9.17 pts }(avg). The gap is largest for Qwen-1.5B, suggesting that smaller models benefit from easier “round-0’’ examples that Random-2K may miss and Debate-Only discards. We therefore use the full trace set in all other experiments.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Model} & \textbf{Random-2K} & \textbf{Debate-Only} & \textbf{All-Traces} \\
+\midrule
+Qwen-1.5B & 44.82 & 51.61 & \textbf{55.92} \\
+Qwen-3B   & 58.10 & 62.70 & \textbf{69.50} \\
+Qwen-7B   & 69.71 & 72.53 & \textbf{74.71} \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Effect of training-set size and composition.} GSM-Plus accuracy after one evolution round using three trace-selection schemes.}
+\label{tab:data_selection}
+\end{table}
+
+\paragraph{\textsc{6) How long do we train?}} Figure \ref{fig:steps} plots GSM-Plus accuracy as we grow the number of GRPO training steps from 2K to 10K. All models share the similiar trend: rapid gains up to about 8K steps followed by saturation. Small and mid-size models profit the most from the early updates—Qwen-1.5B climbs 8.0 pts between 2K and 6K samples—whereas larger models such as Qwen-14B rise more slowly but steady. Beyond 8K the curve flattens: the average improvement from 8K $→$ 10 k is only +0.32 pts while wall-clock time grows by 25\%.  
+% We therefore adopt one epoch over 8 k traces as our default: it reaches 97–99\% of the final accuracy at roughly half the compute cost of a second pass.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{train_steps.pdf}
+    \caption{\textbf{Diminishing returns in GRPO updates after 8K steps.}  
+    GSM-Plus accuracy for five models as a function of the number of training steps during GRPO.}
+
+    \label{fig:steps}
+\end{figure}
+
+
+
+
+
+\paragraph{\textsc{7) Does iterative fine-tuning hurt?}} Figure \ref{fig:forget} plots GSM8K and GSM-Plus accuracy for Qwen-1.5B after the first and second evolution rounds under four sampling temperatures. When we keep the original exploratory setting (\(T=1.0\)) the model loses 2.0 pts on GSM8K and gains only 13.5 pts on GSM-Plus—well below the +33.5 pts it achieved in Round 1—confirming a clear case of catastrophic forgetting. Lowering the temperature stabilises training: at \(T=0.4\) Round-2 accuracy is within 0.9 pts of Round 1 on GSM-Plus and almost fully recovers on GSM8K; a deterministic schedule (\(T=0.0\)) even adds +3.3 pts on GSM8K but plateaus on GSM-Plus.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{forgetting.pdf}
+    \caption{\textbf{Iterative fine-tuning and forgetting.}  
+    Accuracy of Qwen-1.5 B after the first and second evolution rounds at four sampling temperatures.}
+
+    % High temperature (\(T=1.0\)) leads to noticeable forgetting, while lower temperatures reduce KL drift and recover performance.
+    \label{fig:forget}
+\end{figure}
+
+The mechanism is visible in the KL divergence between successive students. At \(T=1.0\) we measure \(\text{KL}_{\text{evo}}{=}0.37\) for Qwen-1.5B, whereas \(T=0.4\) cuts this to 0.19 and \(T=0.0\) to 0.11, matching the reduction in forgetting. We therefore adopt a linear decay from 0.7 in Round 1 to 0.3 in later rounds for all models up to 3B parameters; larger models did not require temperature adjustment.
+
+
+\section{Conclusion}
+
+In this paper, we introduced the \textsc{Debate, Train, Evolve (DTE)} framework, a novel approach enabling language models to autonomously enhance their reasoning capabilities by leveraging multi-agent debate traces. Our \textsc{Reflect-Critique-Refine} prompting strategy significantly improved debate quality, reducing sycophancy and reasoning errors. Experiments demonstrated substantial accuracy gains, notably an average improvement of \textbf{8.92\%} accuracy on the challenging GSM-PLUS dataset. Additionally, we showed strong cross-domain generalization, confirming that our approach captures general reasoning skills rather than dataset-specific patterns. Importantly, DTE effectively combines the benefits of multi-agent debate with the computational efficiency of single-model inference.
+
+
+\subsection*{Limitations}
+\label{section:6}
+Despite its effectiveness, our approach has certain limitations. \textbf{Firstly,} iterative fine-tuning within the DTE framework can cause catastrophic forgetting, particularly evident in smaller language models (\textless3B parameters), leading to potential model collapse. Although we explored several mitigation strategies, completely eliminating this issue remains challenging. \textbf{Secondly,} our framework assumes the availability of high-quality initial debate traces; thus, its efficacy may degrade if debates are of poor quality or if initial agent performance is weak. \textbf{Third,} our study primarily focused on structured reasoning tasks like mathematical and commonsense reasoning. The applicability and effectiveness of DTE on less structured or more open-ended tasks, such as natural language generation or dialogue systems, require further investigation. \textbf{Lastly,} although computationally efficient compared to traditional MAD setups, DTE still incurs higher training costs than standard single-model fine-tuning. Future work should aim to optimize the framework further, enhancing its practicality and accessibility.
+
+
+
+\section*{Ethics Statement}
+This study explore the self-evolution of language models using publicly available benchmarks and datasets such as GSM8K, ARC, and CommonsenseQA. All data used in our experiments are non-sensitive and freely accessible, ensuring compliance with ethical research standards and reproducibility. Our method involves fine-tuning on model-generated content, without introducing or relying on any human-annotated private data. 
+
+\section*{Acknowledgements}
+This work was supported by NSF NAIRR Pilot with PSC Neocortex, NCSA Delta; Amazon, Cisco Research, Commonwealth Cyber Initiative, Amazon–Virginia Tech Center for Efficient and Robust Machine Learning, and Sanghani Center for AI and Data Analytics at Virginia Tech. The views, findings, conclusions, and recommendations expressed in this work are those of the authors and do not necessarily reflect the opinions of the funding agencies.
+
+
+\bibliography{custom}
+
+
+\appendix
+
+\input{section/appendix}
+
+\end{document}
