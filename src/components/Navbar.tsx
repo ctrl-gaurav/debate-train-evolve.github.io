@@ -51,12 +51,12 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-2.5 group">
-            <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm transition-all duration-300 ${
+            <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-[11px] font-display tracking-tight transition-all duration-300 ${
               isDark
-                ? 'bg-gradient-to-br from-electric-400 to-navy-500 text-white group-hover:shadow-lg group-hover:shadow-electric-400/25'
-                : 'bg-gradient-to-br from-navy-600 to-electric-600 text-white group-hover:shadow-lg group-hover:shadow-navy-500/25'
+                ? 'bg-gradient-to-br from-[#0a1f80] via-[#2a4dff] to-[#00a1f0] text-white group-hover:shadow-lg group-hover:shadow-electric-400/25'
+                : 'bg-gradient-to-br from-navy-600 via-electric-500 to-[#00a1f0] text-white group-hover:shadow-lg group-hover:shadow-navy-500/25'
             }`}>
-              D
+              DTE
             </div>
             <span className={`font-display font-bold text-lg tracking-tight ${
               isDark ? 'text-white' : 'text-navy-900'

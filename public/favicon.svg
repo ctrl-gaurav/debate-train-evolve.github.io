@@ -1,10 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#2a4dff"/>
+      <stop offset="0%" style="stop-color:#0a1f80"/>
+      <stop offset="50%" style="stop-color:#2a4dff"/>
       <stop offset="100%" style="stop-color:#00a1f0"/>
     </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4dc3ff"/>
+      <stop offset="100%" style="stop-color:#00ffcc"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
-  <text x="32" y="44" font-family="system-ui, sans-serif" font-weight="800" font-size="32" fill="white" text-anchor="middle">D</text>
+  <!-- Background -->
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <!-- Subtle grid pattern -->
+  <line x1="16" y1="0" x2="16" y2="64" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="32" y1="0" x2="32" y2="64" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="48" y1="0" x2="48" y2="64" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="0" y1="16" x2="64" y2="16" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="0" y1="32" x2="64" y2="32" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="0" y1="48" x2="64" y2="48" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <!-- Orbital ring -->
+  <ellipse cx="32" cy="32" rx="22" ry="8" fill="none" stroke="url(#accent)" stroke-width="1.2" opacity="0.3" transform="rotate(-25 32 32)"/>
+  <!-- DTE text -->
+  <text x="32" y="40" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="22" fill="white" text-anchor="middle" letter-spacing="-0.5" filter="url(#glow)">DTE</text>
+  <!-- Bottom accent dot -->
+  <circle cx="32" cy="51" r="2" fill="url(#accent)" opacity="0.6"/>
 </svg>

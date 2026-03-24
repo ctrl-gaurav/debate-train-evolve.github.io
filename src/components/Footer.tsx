@@ -19,10 +19,10 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <div className={`w-8 h-8 rounded-lg bg-gradient-to-br from-electric-400 to-navy-500 flex items-center justify-center font-bold text-sm text-white shadow-md ${
+              <div className={`w-8 h-8 rounded-lg bg-gradient-to-br from-[#0a1f80] via-[#2a4dff] to-[#00a1f0] flex items-center justify-center font-bold text-[10px] font-display tracking-tight text-white shadow-md ${
                 isDark ? 'shadow-electric-500/15' : 'shadow-navy-500/15'
               }`}>
-                D
+                DTE
               </div>
               <span className={`font-display font-bold text-lg ${isDark ? 'text-white' : 'text-navy-900'}`}>
                 DTE Framework
